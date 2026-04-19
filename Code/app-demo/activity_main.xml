@@ -1,0 +1,20 @@
+<!-- activity_main.xml – Layout for the Malicious Permission Demo -->
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a1a2e"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvOutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:textColor="#e0e0e0"
+        android:textSize="13sp"
+        android:lineSpacingExtra="3dp"
+        android:text="" />
+
+</ScrollView>

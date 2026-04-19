@@ -1,0 +1,62 @@
+<!--
+  ============================================================
+   AndroidManifest.xml – Malicious App Permission Demo
+   Student: Muhammad Ammar Qaisar (BITF24A052)
+   Project: How Attackers Target Smartphones
+
+   ⚠️  EDUCATIONAL USE ONLY – demonstrates how a malicious app
+       requests dangerous permissions to access personal data.
+  ============================================================
+-->
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.edu.maliciouspermissiondemo">
+
+    <!--
+        ┌─────────────────────────────────────────────────┐
+        │  DANGEROUS PERMISSIONS REQUESTED BY THE APP     │
+        │  In a real malicious app these would be hidden   │
+        │  among legitimate-looking permission requests.   │
+        └─────────────────────────────────────────────────┘
+    -->
+
+    <!-- SMS: read all text messages on the device -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+    <!-- Contacts: read the entire contact list -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- Location: track the user's GPS position -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Camera: access device camera (bonus example) -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Internet: exfiltrate stolen data -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:label="FlashLight Pro"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <!--
+            Note: the app poses as a simple "flashlight" tool,
+            but requests permissions far beyond what a flashlight needs.
+        -->
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>
