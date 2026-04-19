@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – Secure Account</title>
+    <style>
+        /* ============================================================
+           EDUCATIONAL PHISHING DEMO – FOR ACADEMIC USE ONLY
+           Student: Muhammad Ammar Qaisar (BITF24A052)
+           Project: How Attackers Target Smartphones
+           ============================================================ */
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Education-only warning banner ── */
+        .warning-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #e74c3c;
+            color: #fff;
+            text-align: center;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            z-index: 1000;
+            letter-spacing: 0.5px;
+        }
+        .warning-banner span { display: inline-block; margin-right: 8px; }
+
+        /* ── Fake login card ── */
+        .login-card {
+            background: #fff;
+            width: 380px;
+            max-width: 92%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            padding: 40px 32px 32px;
+            margin-top: 48px;
+        }
+
+        .login-card .logo {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #fff;
+        }
+
+        .login-card h2 {
+            text-align: center;
+            font-size: 22px;
+            color: #2d3436;
+            margin-bottom: 6px;
+        }
+        .login-card .subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #636e72;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 6px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #dfe6e9;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus {
+            border-color: #667eea;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: opacity 0.2s;
+        }
+        .btn-login:hover { opacity: 0.9; }
+
+        .links {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 13px;
+            color: #636e72;
+        }
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        /* ── Captured-credentials panel (hidden initially) ── */
+        .captured-panel {
+            display: none;
+            background: #2d3436;
+            color: #dfe6e9;
+            width: 380px;
+            max-width: 92%;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            word-break: break-all;
+        }
+        .captured-panel h3 {
+            color: #e74c3c;
+            font-family: -apple-system, sans-serif;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        .captured-panel .entry {
+            background: #1e272e;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        .captured-panel .entry strong { color: #ffeaa7; }
+
+        #logList { list-style: none; padding: 0; }
+        #logList li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+<!-- ⚠️ EDUCATION-ONLY WARNING ⚠️ -->
+<div class="warning-banner">
+    <span>⚠️</span> EDUCATIONAL DEMO ONLY – This is a simulated phishing page for academic study (BITF24A052). Never use on real users.
+</div>
+
+<!-- Fake Login Form -->
+<div class="login-card">
+    <div class="logo">🔒</div>
+    <h2>Welcome Back</h2>
+    <p class="subtitle">Sign in to your account</p>
+
+    <form id="phishForm" onsubmit="return captureCredentials(event)">
+        <div class="form-group">
+            <label for="email">Email or Username</label>
+            <input type="text" id="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-login">Sign In</button>
+    </form>
+
+    <div class="links">
+        <a href="#">Forgot password?</a> · <a href="#">Create account</a>
+    </div>
+</div>
+
+<!-- Panel that reveals captured credentials -->
+<div class="captured-panel" id="capturedPanel">
+    <h3>🚨 Credentials Captured (Demo)</h3>
+    <p style="margin-bottom:12px;color:#b2bec3;font-family:sans-serif;font-size:12px;">
+        In a real attack these would be sent to an attacker-controlled server.<br>
+        Here they are shown locally for educational purposes only.
+    </p>
+    <ul id="logList"></ul>
+</div>
+
+<script>
+    // ============================================================
+    //  EDUCATIONAL PHISHING DEMO – JavaScript (Client-Side Only)
+    //  No data leaves the user's browser.
+    // ============================================================
+
+    const captured = [];  // stores captured entries locally
+
+    function captureCredentials(e) {
+        e.preventDefault();
+
+        const email    = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const timestamp = new Date().toLocaleString();
+
+        const entry = { email, password, timestamp };
+        captured.push(entry);
+
+        // Log to browser console (simulates backend recording)
+        console.warn('[PHISHING DEMO] Captured credentials:', entry);
+
+        // Show captured data panel
+        const panel = document.getElementById('capturedPanel');
+        panel.style.display = 'block';
+
+        const li = document.createElement('li');
+        li.classList.add('entry');
+        li.innerHTML = `
+            <strong>Time:</strong> ${timestamp}<br>
+            <strong>Email:</strong> ${email}<br>
+            <strong>Password:</strong> ${password}
+        `;
+        document.getElementById('logList').prepend(li);
+
+        // Reset form
+        document.getElementById('phishForm').reset();
+
+        // Optional: send to local backend (uncomment if running server.js)
+        // fetch('/capture', {
+        //     method: 'POST',
+        //     headers: {'Content-Type':'application/json'},
+        //     body: JSON.stringify(entry)
+        // });
+
+        return false;
+    }
+</script>
+
+</body>
+</html>
